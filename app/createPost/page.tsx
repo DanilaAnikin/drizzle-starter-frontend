@@ -23,14 +23,17 @@ export default function CreatePostPage () {
                             name="title"
                             type="text"
                             placeholder="Enter Title"
+                            onChange={ (e) => setTitle(e.target.value) }
                             className="outline-none placeholder:text-indigo-700 placeholder:opacity-60 border border-indigo-800 rounded p-1.5 text-lg"
                         />
                     </div>
                     <div className="flex flex-col">
                         <label htmlFor="content">Content</label>
                         <textarea
+                            value={ content }
                             name="content"
                             placeholder="Enter Content"
+                            onChange={ (e) => setContent(e.target.value) }
                             className="outline-none placeholder:text-indigo-700 placeholder:opacity-60 border border-indigo-800 rounded p-1.5 text-lg"
                         />
                     </div>
