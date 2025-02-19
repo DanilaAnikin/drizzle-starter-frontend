@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 
-const CreateUser = () => {
+const CreateUser: React.FC<{ goLogin: () => void }> = ({ goLogin }) => {
   const [formData, setFormData] = useState({ name: "", email: "", password: "" });
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
@@ -81,8 +81,8 @@ const CreateUser = () => {
         </form>
         {message && <p className="text-green-500 mt-4">{message}</p>}
         {error && <p className="text-red-500 mt-4">{error}</p>}
+        <button onClick={goLogin}>Login</button>
       </div>
-      <button>Login</button>
     </div>
   );
 };

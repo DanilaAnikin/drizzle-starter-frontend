@@ -17,7 +17,7 @@ export default function Home() {
     <div>
       { 
         register ? (
-          <CreateUser />
+          <CreateUser goLogin={() => setRegister(false)} />
         ) : (
           <LoginUser goRegister={() => setRegister(true)} />
         )

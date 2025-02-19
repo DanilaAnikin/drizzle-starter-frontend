@@ -8,12 +8,13 @@ const UserList = () => {
   const [error, setError] = useState("");
 
   const getUser = async() => {
-      const token = await localStorage.getItem('authToken');
+      const token = localStorage.getItem('authToken');
       if (!token) console.log('User is not logged');
+      
       const user = await getLoggedUser(token!);
-      console.log(await user)
+      console.log(user);
   }
-//   getUser();
+  // getUser();
 
   useEffect(() => {
     const fetchUsers = async () => {
