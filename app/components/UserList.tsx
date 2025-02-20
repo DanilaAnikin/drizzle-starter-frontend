@@ -4,30 +4,49 @@ import { getLoggedUser, getUsers } from "../services/userService";
 import { User } from "../types";
 
 const UserList = () => {
-  const [users, setUsers] = useState([]);
-  const [error, setError] = useState("");
+  const [users, setUsers] = useState<User[]>([]);
+  const [error, setError] = useState<string>("");
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
 
-  const getUser = async() => {
-      const token = localStorage.getItem('authToken');
-      if (!token) console.log('User is not logged');
+  const checkLoggedInUser = async () => {
+    try {
+      if (typeof window === "undefined") return;
+      const token = localStorage.getItem("authToken");
+      if (!token) {
+        console.log("User is not logged in");
+        setIsLoggedIn(false);
+        return;
+      }
+
+      const user = await getLoggedUser(token);
+      console.log("Logged-in user:", user);
       
-      const user = await getLoggedUser(token!);
-      console.log(user);
-  }
-  // getUser();
+      setIsLoggedIn(true);
+    } catch (err) {
+      console.error("Error fetching logged-in user:" , err);
+      setIsLoggedIn(false);
+    }
+  };
+
+  const fetchUsers = async () => {
+    try {
+      const userData = await getUsers();
+      setUsers(userData);
+      setError("");
+    } catch (err: any) {
+      setError(err.message);
+      setUsers([]);
+    }
+  };
 
   useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const userData = await getUsers();
-        setUsers(userData);
-      } catch (err: any) {
-        setError(err.message);
-      }
-    };
-
+    checkLoggedInUser();
     fetchUsers();
   }, []);
+
+  if (isLoggedIn === null) {
+    return <p>Loading...</p>
+  }
 
   if (error) {
     return <p>Error: {error}</p>;

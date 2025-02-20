@@ -1,15 +1,14 @@
-"use client";
-import React, { useState } from "react";
+import React from "react";
 
 const CreateUser: React.FC<{ goLogin: () => void }> = ({ goLogin }) => {
-  const [formData, setFormData] = useState({ name: "", email: "", password: "" });
-  const [message, setMessage] = useState("");
-  const [error, setError] = useState("");
+  let formData = { name: "", email: "", password: "" };
+  let message: string = "";
+  let error: string = "";
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    formData = { ...formData, [e.target.name]: e.target.value };
   };
-
+  
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -20,18 +19,18 @@ const CreateUser: React.FC<{ goLogin: () => void }> = ({ goLogin }) => {
         },
         body: JSON.stringify(formData),
       });
-
+      
       if (!response.ok) {
         throw new Error("Failed to create user");
       }
-
+      
       const data = await response.json();
       const token = data.token;
-
-      setMessage("User created successfully! Token: " + token);
-      setFormData({ name: "", email: "", password: "" });
+      
+      message = "User created successfully! Token: " + token;
+      formData = { name: "", email: "", password: "" };
     } catch (err: any) {
-      setError(err.message || "An error occurred while creating the user");
+      error = err.message || "An error occurred while creating the user";
     }
   };
 
