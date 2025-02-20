@@ -10,7 +10,6 @@ const UserList = () => {
 
   const checkLoggedInUser = async () => {
     try {
-      if (typeof window === "undefined") return;
       const token = localStorage.getItem("authToken");
       if (!token) {
         console.log("User is not logged in");
@@ -53,15 +52,17 @@ const UserList = () => {
   }
 
   return (
-    <div>
-      <h1>Users List</h1>
-      <ul>
-        { users.map((user: User) => (
-          <li key={user.id}>
-            {user.name} - {user.email}
-          </li>
-        )) }
-      </ul>
+    <div className="flex flex-col items-center gap-2">
+      <h1 className="mt-10">Users List</h1>
+      <div className="flex justify-center">
+        <ul className="flex flex-col gap-1">
+          { users.map((user: User) => (
+            <li key={user.id} className="p-1 border rounded border-gray-300">
+              {user.name} - {user.email}
+            </li>
+          )) }
+        </ul>
+      </div>
     </div>
   );
 };

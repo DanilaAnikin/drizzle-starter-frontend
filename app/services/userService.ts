@@ -8,6 +8,7 @@ export const getUsers = async(limit: number = 50, page: number = 1, orderBy: str
             Authorization: `Bearer ${token}`
         }
     });
+
     if (!response.ok) {
       throw new Error("Failed to fetch users");
     }
@@ -26,7 +27,7 @@ export const getLoggedUser = async(token: string) => {
         throw new Error(errorData.message || "Failed to get user");
     }
 
-    return await response;
+    return response;
 }
 
 export const createUser = async(data: CreateUser) => {

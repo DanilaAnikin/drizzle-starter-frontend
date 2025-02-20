@@ -17,7 +17,7 @@ const LoginUser: React.FC<{goRegister: () => void}> = ({ goRegister }) => {
             const data = await response.text();
             const token = data || response.headers.get('authorization')?.split(' ')[1];
             if (token) {
-                localStorage.setItem('authToken', await token);
+                localStorage.setItem('authToken', token);
                 alert('Login successful!');
             } else {
                 throw new Error('Token not received');
