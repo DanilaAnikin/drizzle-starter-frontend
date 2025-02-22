@@ -1,31 +1,11 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { getLoggedUser, getUsers } from "../services/userService";
+import { getUsers } from "../services/userService";
 import { User } from "../types";
 
 const UserList = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [error, setError] = useState<string>("");
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
-
-  const checkLoggedInUser = async () => {
-    try {
-      const token = localStorage.getItem("authToken");
-      if (!token) {
-        console.log("User is not logged in");
-        setIsLoggedIn(false);
-        return;
-      }
-
-      const user = await getLoggedUser(token);
-      console.log("Logged-in user:", user);
-      
-      setIsLoggedIn(true);
-    } catch (err) {
-      console.error("Error fetching logged-in user:" , err);
-      setIsLoggedIn(false);
-    }
-  };
 
   const fetchUsers = async () => {
     try {
@@ -39,13 +19,8 @@ const UserList = () => {
   };
 
   useEffect(() => {
-    checkLoggedInUser();
     fetchUsers();
   }, []);
-
-  if (isLoggedIn === null) {
-    return <p>Loading...</p>
-  }
 
   if (error) {
     return <p>Error: {error}</p>;

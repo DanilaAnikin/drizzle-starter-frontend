@@ -24,19 +24,9 @@ export default function Home() {
     }
   }, []);
 
-  if (logged) return <div><UserList /></div>;
-  
   if (logged === null) return <div>Loading...</div>;
-
-  return (
-    <div>
-      { 
-        register ? (
-          <CreateUser goLogin={() => setRegister(false)} />
-        ) : (
-          <LoginUser goRegister={() => setRegister(true)} />
-        )
-      }
-    </div>
-  );
+  
+  if (logged) return <div><UserList /></div>;
+  if (register) return <div><CreateUser goLogin={() => setRegister(false)} /></div>
+  return <div><LoginUser goRegister={() => setRegister(true)} /></div>
 }
